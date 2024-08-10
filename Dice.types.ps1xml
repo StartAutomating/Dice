@@ -221,6 +221,17 @@ Chance</Value>
                     </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
+        <Name>Face</Name>
+        <GetScriptBlock>
+                        
+if ($this.Table.ExtendedProperties['Faces'] -and $this.Roll) {
+    $this.Table.ExtendedProperties['Faces'][$this.Roll - 1]
+} else {
+    ''
+}
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>StandardDeviation</Name>
         <GetScriptBlock>
                         if ($this.Table -and 
