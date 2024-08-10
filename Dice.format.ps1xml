@@ -42,5 +42,36 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>Dice.Roll</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice.Roll</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>#</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Roll</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Face</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
