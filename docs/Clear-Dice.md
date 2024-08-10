@@ -23,6 +23,7 @@ Clears the dice, removing all the rolls.
 
 ### Parameters
 #### **Sides**
+The number of sides on the dice.
 
 |Type     |Required|Position|PipelineInput        |Aliases        |
 |---------|--------|--------|---------------------|---------------|
