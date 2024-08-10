@@ -86,7 +86,11 @@
                 <ScriptBlock>
     $thisRoll = $_
     
-    if ($request -is [Net.HttpListenerRequest]) {
+    # If there is a request and the user agent is not PowerShell, curl, or wget,
+    if ($request -is [Net.HttpListenerRequest] -and 
+        $request.UserAgent -notmatch '(?&gt;PowerShell|curl|wget)'
+    ) {
+        # Return an HTML page with an SVG of the dice rolls.
         @"
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
