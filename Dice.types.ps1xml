@@ -97,6 +97,20 @@ return $dice.'.DB'
 
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>RollCount</Name>
+        <GetScriptBlock>
+                        return $this.RollTable.Rows.Count
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>RollTable</Name>
+        <GetScriptBlock>
+                        if ($dice.DB.Tables[$this.Name]) {
+    return ,$dice.DB.Tables[$this.Name]
+}
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
 </Types>
