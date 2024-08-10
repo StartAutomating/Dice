@@ -1,0 +1,46 @@
+<!-- Generated with EZOut 2.0.6: Install-Module EZOut or https://github.com/StartAutomating/EZOut -->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Dice</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Sides</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+                <FormatString>Name</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+        if ($_.Sides) {
+            $_.Sides
+        } else {
+            [double]::PositiveInfinity           
+        }
+    </ScriptBlock>
+                <FormatString>Sides</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Chance</PropertyName>
+                <FormatString>{0:p}</FormatString>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
