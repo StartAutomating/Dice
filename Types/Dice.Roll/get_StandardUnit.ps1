@@ -1,0 +1,1 @@
+$this.Distance  / $this.StandardDeviation
