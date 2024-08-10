@@ -69,6 +69,15 @@ if (-not $this.Sides) {
                     </Script>
       </ScriptMethod>
       <ScriptProperty>
+        <Name>Average</Name>
+        <GetScriptBlock>
+                        if ($this.RollTable.Compute) {
+    $this.RollTable.Compute('AVG(Roll)','')
+} 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
         <Name>DB</Name>
         <GetScriptBlock>
                         param()
