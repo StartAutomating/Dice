@@ -11,7 +11,7 @@ Write-FormatView -TypeName Dice.Rolls -Action {
         <svg width="100%" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
             <text x='50%' y='50%' fill='currentColor' text-anchor='middle' alignment-baseline='middle'>$(                
                 foreach ($roll in $thisRoll.Rolls) {
-                    if ($roll.Face) { [Web.HttpUtility]::htmlEncode("$($roll.Face)") } else { "$($roll.Roll) / $($roll.Sides)" }
+                    if ($roll.Face) { [Web.HttpUtility]::htmlEncode("$($roll.Face)") } else { "$($roll.Roll)" }
                 }                
             )</text>
         </svg>
