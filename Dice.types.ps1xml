@@ -21,6 +21,10 @@
         <ReferencedMemberName>Average</ReferencedMemberName>
       </AliasProperty>
       <AliasProperty>
+        <Name>SD</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
         <Name>Stdev</Name>
         <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
       </AliasProperty>
@@ -174,6 +178,30 @@ Chance</Value>
   <Type>
     <Name>Dice.Roll</Name>
     <Members>
+      <AliasProperty>
+        <Name>#</Name>
+        <ReferencedMemberName>N</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Avg</Name>
+        <ReferencedMemberName>Average</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Luck</Name>
+        <ReferencedMemberName>Distance</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>SD</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Stdev</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>SU</Name>
+        <ReferencedMemberName>StandardUnit</ReferencedMemberName>
+      </AliasProperty>
       <ScriptProperty>
         <Name>Average</Name>
         <GetScriptBlock>
