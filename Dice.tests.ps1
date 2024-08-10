@@ -27,8 +27,8 @@ describe Dice {
 
     it 'Can clear the dice' {
         Clear-Dice
-        Get-Dice | 
-            Select-Object -ExpandProperty RollCount | 
-            Should -Be 0
+        foreach ($foundDice in Get-Dice) {
+            $foundDice.RollTable.Rows.Count | Should -Be 0
+        }
     }
 }
