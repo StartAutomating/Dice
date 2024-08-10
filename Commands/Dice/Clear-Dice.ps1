@@ -12,6 +12,7 @@ function Clear-Dice {
         Read-Dice
     #>
     param(
+    # The number of sides on the dice.
     [Parameter(ValueFromPipelineByPropertyName)]
     [Alias('Side','Number')]
     [int]$Sides
@@ -26,7 +27,9 @@ function Clear-Dice {
             }
         } else {
             Write-Warning "Clearing all dice."
-            $dice.DB.Tables['Dice'].RollTable.Clear()
+            foreach ($foundDice in Get-Dice) {
+                $foundDice.RollTable.Clear()
+            }
         }
     }
 }
