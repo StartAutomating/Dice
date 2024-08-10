@@ -1,7 +1,11 @@
 Write-FormatView -TypeName Dice.Rolls -Action {
     $thisRoll = $_
     
-    if ($request -is [Net.HttpListenerRequest]) {
+    # If there is a request and the user agent is not PowerShell, curl, or wget,
+    if ($request -is [Net.HttpListenerRequest] -and 
+        $request.UserAgent -notmatch '(?>PowerShell|curl|wget)'
+    ) {
+        # Return an HTML page with an SVG of the dice rolls.
         @"
 <!DOCTYPE html>
 <html>
