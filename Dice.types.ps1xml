@@ -251,4 +251,9 @@ if ($this.Table.ExtendedProperties['Faces'] -and $this.Roll) {
       </ScriptProperty>
     </Members>
   </Type>
+  <Type>
+    <Name>Dice.Rolls</Name>
+    <Members>
+    </Members>
+  </Type>
 </Types>
