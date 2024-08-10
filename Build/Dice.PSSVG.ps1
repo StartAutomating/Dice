@@ -33,12 +33,12 @@ svg @(
         svg.tspan "DICE" -FontSize "${scaleMin}em"        
     ) -FontSize 3em -Fill '#4488ff' -X 50% -DominantBaseline 'middle' -TextAnchor 'middle' -Y 50% @FontSplat
     svg.text  @(
-        svg.tspan "⚀" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
-        svg.tspan "⚁" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
-        svg.tspan "⚂" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
-        svg.tspan "⚃" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
-        svg.tspan "⚄" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
-        svg.tspan "⚅" -Children -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚀" -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚁" -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚂" -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚃" -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚄" -FontSize "${scaleMin}em" -Dx '-0.1em'
+        svg.tspan "⚅" -FontSize "${scaleMin}em" -Dx '-0.1em'
     ) -FontSize 2em -Fill '#4488ff' -X 50% -DominantBaseline 'middle' -TextAnchor 'middle' -Y 66% @FontSplat    
 ) -ViewBox 300, ([Math]::Floor(300 / $φ)) -OutputPath (Join-Path $assetsPath "Dice$(if ($variant){"-$($variant)"}).svg")
 }
