@@ -192,6 +192,18 @@ Chance</Value>
                         $this.Roll - $this.Average
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardDeviation</Name>
+        <GetScriptBlock>
+                        if ($this.Table -and 
+    $this.Table.Columns -and 
+    $this.Table.Columns['Roll']
+) {
+    $this.Table.Compute('STDEV(Roll)','')
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
 </Types>
