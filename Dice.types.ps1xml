@@ -133,6 +133,15 @@ return $dice.'.DB'
 }
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardDeviation</Name>
+        <GetScriptBlock>
+                        if ($this.RollTable.Compute) {
+    $this.RollTable.Compute('STDEV(Roll)','')
+} 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
       <NoteProperty>
         <Name>DefaultDisplay</Name>
         <Value>Name
