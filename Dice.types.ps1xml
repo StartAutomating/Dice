@@ -204,6 +204,12 @@ Chance</Value>
 
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardUnit</Name>
+        <GetScriptBlock>
+                        $this.Distance  / $this.StandardDeviation
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
 </Types>
