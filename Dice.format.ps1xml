@@ -1,0 +1,145 @@
+<!-- Generated with EZOut 2.0.6: Install-Module EZOut or https://github.com/StartAutomating/EZOut -->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Dice</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Sides</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+                <FormatString>Name</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+        if ($_.Sides) {
+            $_.Sides
+        } else {
+            [double]::PositiveInfinity           
+        }
+    </ScriptBlock>
+                <FormatString>Sides</FormatString>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Chance</PropertyName>
+                <FormatString>{0:p}</FormatString>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Dice.Roll</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice.Roll</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>#</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Roll</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Face</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Dice.Rolls</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice.Rolls</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+    $thisRoll = $_
+    
+    # If there is a request and the user agent is not PowerShell, curl, or wget,
+    if ($request -is [Net.HttpListenerRequest] -and 
+        $request.UserAgent -notmatch '(?&gt;PowerShell|curl|wget)'
+    ) {
+        # Return an HTML page with an SVG of the dice rolls.
+        @"
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;title&gt;$([Web.HttpUtility]::htmlEncode($Request.Url))&lt;/title&gt;
+    &lt;style&gt;html, body { font-size: 2em; height:100% }&lt;/style&gt;
+    &lt;body&gt;
+        &lt;svg width="100%" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"&gt;
+            &lt;text x='50%' y='50%' fill='currentColor' text-anchor='middle' alignment-baseline='middle'&gt;$(                
+                foreach ($roll in $thisRoll.Rolls) {
+                    if ($roll.Face) { [Web.HttpUtility]::htmlEncode("$($roll.Face)") } else { "$($roll.Roll)" }
+                }                
+            )&lt;/text&gt;
+        &lt;/svg&gt;
+    &lt;/body&gt;
+&lt;/html&gt;        
+"@
+        
+    } else {
+        @(foreach ($roll in $thisRoll.Rolls) {
+            if ($roll.Face) { "$($roll.Face)" } else { "$($roll.Roll) / $($roll.Sides)" }
+        }) -join ' '           
+    }
+</ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    <View>
+      <Name>Number</Name>
+      <ViewSelectedBy>
+        <TypeName>Dice.Rolls</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+    @(foreach ($roll in $thisRoll.Rolls) {
+        $roll.Roll
+    }) -join [Environment]::NewLine
+</ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

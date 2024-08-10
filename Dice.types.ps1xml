@@ -1,0 +1,259 @@
+<!-- Generated with EZOut 2.0.6: Install-Module EZOut or https://github.com/StartAutomating/EZOut -->
+<Types>
+  <Type>
+    <Name>Dice</Name>
+    <Members>
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Name</Name>
+              <Name>Sides</Name>
+              <Name>Chance</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+      <AliasProperty>
+        <Name>Avg</Name>
+        <ReferencedMemberName>Average</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>SD</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Stdev</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Var</Name>
+        <ReferencedMemberName>Variance</ReferencedMemberName>
+      </AliasProperty>
+      <ScriptMethod>
+        <Name>Roll</Name>
+        <Script>
+                        &lt;#
+.SYNOPSIS
+    Rolls the dice.
+.DESCRIPTION
+    Rolls a dice any number of sides any number of times.
+#&gt;
+param(
+# The number of sides on the dice.
+[Parameter(ValueFromPipelineByPropertyName)]
+[Alias('Side','Number')]
+[int]$Sides,
+
+# The number of rolls of the dice.
+[Alias('Rolls','Roll')]
+[int]$RollCount = 1
+)
+
+
+
+if ($sides) {
+    $thisDiceExists = @($dice.DB.Tables["Dice"].Select("Sides = $sides"))
+    if (-not $thisDiceExists) {
+        $thisDiceExists = (New-Dice -Sides $sides)
+    }
+    foreach ($n in 1..$rollCount) {
+        $thisDiceExists.Roll()
+    }                
+    continue
+}
+
+if (-not $this.Sides) {
+    foreach ($die in $dice.DB.Tables['Dice']) {
+        foreach ($n in 1..$rollCount) {
+            $die.Roll() 
+        }            
+    }
+} else {        
+    $rollTable = $dice.DB.Tables[$this.Name]
+    foreach ($n in 1..$rollCount) {
+        $diceRoll = $rollTable.NewRow()
+        $diceRoll.Sides = $this.Sides
+        $diceRoll.Roll = (Get-Random -Minimum 1 -Maximum ($this.Sides + 1)) -as [double]
+        $rollTable.Rows.Add($diceRoll)
+        $diceRoll.pstypenames.insert(0,'Dice.Roll')
+        $diceRoll
+    }        
+}
+                    </Script>
+      </ScriptMethod>
+      <ScriptProperty>
+        <Name>Average</Name>
+        <GetScriptBlock>
+                        if ($this.RollTable.Compute) {
+    $this.RollTable.Compute('AVG(Roll)','')
+} 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>DB</Name>
+        <GetScriptBlock>
+                        param()
+
+
+# If $dice is a PSModuleInfo object and it does not have a '.DB' property,
+if ($dice -is [Management.Automation.PSModuleInfo] -and (-not $dice.'.DB')) {
+    # then create a new DataSet object named 'Dice'.    
+    $diceDB = [Data.DataSet]::new('Dice')
+    $dice.psobject.properties.add([psnoteproperty]::new('.DB', $diceDB), $true)
+    # Create a new DataTable object named 'Dice' and add it to the DataSet object.
+    $diceTable = $diceDB.Tables.Add('Dice')
+    # A dice will have a name and a number of sides.
+    $diceTable.Columns.AddRange(@(
+        [Data.DataColumn]::new('Name', [string], '', 'Attribute')
+        [Data.DataColumn]::new('Sides', [int], '', 'Attribute')
+    ))
+    
+    # The sides of a dice will be the primary key.
+    $diceTable.PrimaryKey = @($diceTable.Columns['Sides'])
+    # The chance of rolling a side will be 1 divided by the number of sides,
+    # and will be calculated using an expression property.
+    $chanceColumn = $diceTable.Columns.Add('Chance', [double], '1/Sides')    
+    $chanceColumn.ColumnMapping = 'Attribute'    
+    
+    # Create a few dice objects.
+    $null = @(
+        New-Dice -Name 'coin' -Sides 2 # -Face '🦸','🦹'       
+        New-Dice -Name 'Six-Sided-Dice' -Sides 6 # -Faces '⚀','⚁','⚂','⚃','⚄','⚅'        
+        New-Dice -Name 'D20' -Sides 20
+    )
+    # Accept the changes to the Dice Table.
+    $diceTable.AcceptChanges()
+}
+# Return the Dice Database (all of the code above should only run once per module load).
+return $dice.'.DB'
+
+
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>RollCount</Name>
+        <GetScriptBlock>
+                        return $this.RollTable.Rows.Count
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>RollTable</Name>
+        <GetScriptBlock>
+                        if ($dice.DB.Tables[$this.Name]) {
+    return ,$dice.DB.Tables[$this.Name]
+}
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardDeviation</Name>
+        <GetScriptBlock>
+                        if ($this.RollTable.Compute) {
+    $this.RollTable.Compute('STDEV(Roll)','')
+} 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Variance</Name>
+        <GetScriptBlock>
+                        if ($this.RollTable.Compute) {
+    $this.RollTable.Compute('Var(Roll)','')
+} 
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <NoteProperty>
+        <Name>DefaultDisplay</Name>
+        <Value>Name
+Sides
+Chance</Value>
+      </NoteProperty>
+    </Members>
+  </Type>
+  <Type>
+    <Name>Dice.Roll</Name>
+    <Members>
+      <AliasProperty>
+        <Name>#</Name>
+        <ReferencedMemberName>N</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Avg</Name>
+        <ReferencedMemberName>Average</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Luck</Name>
+        <ReferencedMemberName>Distance</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>SD</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Stdev</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>SU</Name>
+        <ReferencedMemberName>StandardUnit</ReferencedMemberName>
+      </AliasProperty>
+      <ScriptProperty>
+        <Name>Average</Name>
+        <GetScriptBlock>
+                        if ($this.Table -and 
+    $this.Table.Columns -and 
+    $this.Table.Columns['Roll']
+) {
+    $this.Table.Compute('AVG(Roll)','')
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Distance</Name>
+        <GetScriptBlock>
+                        $this.Roll - $this.Average
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Face</Name>
+        <GetScriptBlock>
+                        
+if ($this.Table.ExtendedProperties['Faces'] -and $this.Roll) {
+    $this.Table.ExtendedProperties['Faces'][$this.Roll - 1]
+} else {
+    ''
+}
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardDeviation</Name>
+        <GetScriptBlock>
+                        if ($this.Table -and 
+    $this.Table.Columns -and 
+    $this.Table.Columns['Roll']
+) {
+    $this.Table.Compute('STDEV(Roll)','')
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>StandardUnit</Name>
+        <GetScriptBlock>
+                        $this.Distance  / $this.StandardDeviation
+                    </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <Type>
+    <Name>Dice.Rolls</Name>
+    <Members>
+    </Members>
+  </Type>
+</Types>
