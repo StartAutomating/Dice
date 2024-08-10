@@ -22,22 +22,32 @@ function Get-Dice {
     )
         
     process {
+        # If the name is provided, we will search for the dice by name.
         if ($name) {
             $foundDice = $dice.DB.Tables['Dice'].Select("Name = '$name'")
             if ($foundDice) {
                 $foundDice
             } else {
+                # If the dice is not found, write an error
+                # (since we can't presume a number of sides)
                 Write-Error "Dice '$name' not found."
                 return
             }
-        } elseif ($side) {
+        }
+        # If the sides are provided, we will search for the dice by sides.
+        elseif ($side)
+        {
             $foundDice = $dice.DB.Tables['Dice'].Select("Sides = $side")
             if ($foundDice) {
                 $foundDice
             } else {
+                # If the dice is not found, create a new dice with the given sides.
                 New-Dice -Sides $side
             }
-        } else {
+        }
+        # If neither the name nor the sides are provided, we will return all dice.
+        else
+        {
             $dice.DB.Tables['Dice']
         }
     }    
