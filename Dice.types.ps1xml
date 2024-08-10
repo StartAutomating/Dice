@@ -16,6 +16,18 @@
           </PropertySet>
         </Members>
       </MemberSet>
+      <AliasProperty>
+        <Name>Avg</Name>
+        <ReferencedMemberName>Average</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Stdev</Name>
+        <ReferencedMemberName>StandardDeviation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Var</Name>
+        <ReferencedMemberName>Variance</ReferencedMemberName>
+      </AliasProperty>
       <ScriptMethod>
         <Name>Roll</Name>
         <Script>
