@@ -96,7 +96,7 @@
         &lt;svg width="100%" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"&gt;
             &lt;text x='50%' y='50%' fill='currentColor' text-anchor='middle' alignment-baseline='middle'&gt;$(                
                 foreach ($roll in $thisRoll.Rolls) {
-                    if ($roll.Face) { [Web.HttpUtility]::htmlEncode("$($roll.Face)") } else { "$($roll.Roll) / $($roll.Sides)" }
+                    if ($roll.Face) { [Web.HttpUtility]::htmlEncode("$($roll.Face)") } else { "$($roll.Roll)" }
                 }                
             )&lt;/text&gt;
         &lt;/svg&gt;
