@@ -3,6 +3,19 @@
   <Type>
     <Name>Dice</Name>
     <Members>
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Name</Name>
+              <Name>Sides</Name>
+              <Name>Chance</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
       <ScriptMethod>
         <Name>Roll</Name>
         <Script>
@@ -111,6 +124,12 @@ return $dice.'.DB'
 }
                     </GetScriptBlock>
       </ScriptProperty>
+      <NoteProperty>
+        <Name>DefaultDisplay</Name>
+        <Value>Name
+Sides
+Chance</Value>
+      </NoteProperty>
     </Members>
   </Type>
 </Types>
