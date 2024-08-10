@@ -186,6 +186,12 @@ Chance</Value>
 
                     </GetScriptBlock>
       </ScriptProperty>
+      <ScriptProperty>
+        <Name>Distance</Name>
+        <GetScriptBlock>
+                        $this.Roll - $this.Average
+                    </GetScriptBlock>
+      </ScriptProperty>
     </Members>
   </Type>
 </Types>
