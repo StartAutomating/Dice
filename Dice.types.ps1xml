@@ -171,4 +171,21 @@ Chance</Value>
       </NoteProperty>
     </Members>
   </Type>
+  <Type>
+    <Name>Dice.Roll</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Average</Name>
+        <GetScriptBlock>
+                        if ($this.Table -and 
+    $this.Table.Columns -and 
+    $this.Table.Columns['Roll']
+) {
+    $this.Table.Compute('AVG(Roll)','')
+}
+
+                    </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
 </Types>
